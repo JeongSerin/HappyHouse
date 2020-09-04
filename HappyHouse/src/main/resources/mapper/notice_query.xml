@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.ssafy.happyhouse.mapper.NoticeMapper">
+	
+	<!-- 전체 검색 -->
+	<select id="noticeList" resultType="com.ssafy.happyhouse.dto.NoticeDto">
+		select * from notice
+	</select>
+	<!-- 글번호로 검색 -->
+	<select id="noticeSearchNo" parameterType="int" resultType="com.ssafy.happyhouse.dto.NoticeDto">
+		select * from notice
+		where noticeno=#{noticeno}
+	</select>
+	<!-- 제목으로 검색  -->
+	<select id="noticeSearchSubject" parameterType="String" resultType="com.ssafy.happyhouse.dto.NoticeDto">
+		select * from notice
+		where subject like concat('%', #{subject}, '%');
+	</select>
+	<!-- 내용으로 검색  -->
+	<select id="noticeSearchContent" parameterType="String" resultType="com.ssafy.happyhouse.dto.NoticeDto">
+		select * from notice
+		where content like concat('%', #{content}, '%');
+	</select>
+	
+	<!-- 상세보기 -->
+	<select id="noticeDetail" parameterType="int" resultType="com.ssafy.happyhouse.dto.NoticeDto">
+		select * from notice
+		where noticeno=#{noticeno}
+	</select>
+	
+	<!-- 글쓰기 -->
+	<insert id="noticeWrite" parameterType="com.ssafy.happyhouse.dto.NoticeDto" >
+		INSERT INTO notice (id, subject, content, regtime) 
+		VALUES (#{id}, #{subject}, #{content}, now());
+	</insert>
+
+		
+   	<!-- 삭제 -->
+   	<delete id="noticeDelete" parameterType="int">
+		delete from notice where noticeno = #{noticeno}
+	</delete>
+
+	<!-- 수정 -->
+   	<update id="noticeUpdate" parameterType="com.ssafy.happyhouse.dto.NoticeDto">
+		update notice set
+		 	content = #{content},
+		 	subject = #{subject}
+		where noticeno = #{noticeno}
+	</update>
+
+</mapper>
+

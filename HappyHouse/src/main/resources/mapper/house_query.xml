@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.ssafy.happyhouse.mapper.HouseMapper">
+
+
+
+	<select id="housedealList" resultType="com.ssafy.happyhouse.dto.HouseDealDto">
+		select a.*, a.dong, lat, lng
+		from housedeal a, houseinfo b
+		where a.AptName=b.AptName
+		limit 1000;
+	</select>
+	
+	<select id="houseSearchDong" parameterType="String" resultType="com.ssafy.happyhouse.dto.HouseDealDto"> 
+		select a.*, a.dong, lat, lng
+		from housedeal a, houseinfo b
+		where a.AptName=b.AptName
+		and a.dong like concat('%', #{dong}, '%');
+		limit 1000;
+	</select>
+	
+	<select id="houseSearchAptName" parameterType="String" resultType="com.ssafy.happyhouse.dto.HouseDealDto"> 
+		select a.*, a.dong, lat, lng
+		from housedeal a, houseinfo b
+		where a.AptName=b.AptName
+		and a.AptName like concat('%', #{aptName}, '%');
+		limit 1000;
+	</select>
+
+
+	<select id="housedealDetail" parameterType="int" resultType="com.ssafy.happyhouse.dto.HouseDealDto">
+		SELECT distinct i.img, d.*
+ 		  FROM houseinfo i
+ 		 RIGHT OUTER JOIN housedeal d
+ 		               ON i.aptname = d.aptname
+ 		 WHERE d.no = #{no}
+	</select>
+	
+</mapper>
+
+
